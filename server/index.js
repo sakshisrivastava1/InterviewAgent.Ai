@@ -14,7 +14,7 @@ const app = express()
 const PORT = process.env.PORT || 6000
 
 app.use(cors({
-    origin: "https://interviewagent-ai.onrender.com/",
+    origin: "https://interviewagent-ai.onrender.com",
     credentials: true
 }))
 
