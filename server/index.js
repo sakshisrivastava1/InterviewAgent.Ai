@@ -21,11 +21,15 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "https://interviewagent-ai.onrender.com/"
+      "https://interviewagent-ai.onrender.com"
     ],
-    credentials: true
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"]
   })
 );
+
+app.options("*", cors());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
