@@ -1,49 +1,38 @@
 import express from "express";
 import dotenv from "dotenv";
 dotenv.config();
-
-import connectToDb from "./config/connectToDB.js";
+import connectToDb from './config/connectToDB.js'
+connectToDb();
 import cookieParser from "cookie-parser";
 import cors from "cors";
-
-import authRoute from "./routes/authRoute.js";
+import authRoute from './routes/authRoute.js'
 import userRoute from "./routes/userRoute.js";
 import interviewRoute from "./routes/interviewRoute.js";
 import paymentRoute from "./routes/paymentRoute.js";
 
-connectToDb();
+const app = express()
+const PORT = process.env.PORT || 6000
 
-const app = express();
+app.use(cors({
+    origin: "https://interviewagent-ai.onrender.com/",
+    credentials: true
+}))
 
-const PORT = process.env.PORT || 6000;
-
-app.use(
-  cors({
-    origin: [
-      "http://localhost:5173",
-      "https://interviewagent-ai.onrender.com"
-    ],
-    credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"]
-  })
-);
-
-app.options("*", cors());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
+
 app.get("/", (req, res) => {
-  res.send("Hello from server");
-});
+    res.send("Hello from server")
+})
 
-app.use("/api/auth", authRoute);
-app.use("/api/user", userRoute);
-app.use("/api/interview", interviewRoute);
-app.use("/api/payment", paymentRoute);
+app.use('/api/auth', authRoute)
+app.use('/api/user', userRoute)
+app.use('/api/interview', interviewRoute)
+app.use('/api/payment', paymentRoute)
 
-app.listen(PORT, () => {
-  console.log(`SERVER IS RUNNING ON PORT ${PORT}`);
-});
+app.listen(PORT,()=>{
+    console.log(`SERVER IS RUNNING ON PORT ${PORT}`)
+})
